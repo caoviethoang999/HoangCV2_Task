@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="itemAccountActivity_accountID_size">12dp</dimen>
+    <dimen name="itemAccountActivity_status_size">13dp</dimen>
+    <dimen name="itemAccountActivity_text_size">16dp</dimen>
+    <dimen name="itemAccountActivity_text_marginTop">10dp</dimen>
+    <dimen name="itemAccountActivity_status_marginStart">10dp</dimen>
+    <dimen name="itemAccountActivity_status_marginEnd">10dp</dimen>
+    <dimen name="itemAccountActivity_viewDetail_marginBottom">20dp</dimen>
+    <dimen name="itemAccountActivity_constraintLayout_marginTop">25dp</dimen>
+    <dimen name="itemAccountActivity_constraintLayout_marginEnd">25dp</dimen>
+    <dimen name="itemAccountActivity_constraintLayout_marginStart">25dp</dimen>
+
+    <dimen name="fragmentAccountActivity_layout_marginTop">10dp</dimen>
+    <dimen name="fragmentAccountActivity_txtHeaderTitle_marginTop">11dp</dimen>
+    <dimen name="fragmentAccountActivity_txtHeaderTitle_textSize">30dp</dimen>
+    <dimen name="fragmentAccountActivity_txtHeaderDescription_marginTop">4dp</dimen>
+    <dimen name="fragmentAccountActivity_txtHeaderDescription_textSize">16dp</dimen>
+    <dimen name="fragmentAccountActivity_txtHeaderTitle_marginStart">30dp</dimen>
+    <dimen name="fragmentAccountActivity_txtHeaderTitle_marginEnd">30dp</dimen>
+    <dimen name="fragmentAccountActivity_txtHeaderDescription_marginStart">30dp</dimen>
+    <dimen name="fragmentAccountActivity_txtHeaderDescription_marginEnd">30dp</dimen>
+    <dimen name="fragmentAccountActivity_txtHeaderDescription_marginBottom">30dp</dimen>
+    <dimen name="fragmentAccountActivity_tabLayoutAccountActivity_marginTop">30dp</dimen>
+    <dimen name="fragmentAccountActivity_tabLayoutAccountActivity_marginStart">40dp</dimen>
+    <dimen name="fragmentAccountActivity_tabLayoutAccountActivity_marginEnd">30dp</dimen>
+    <dimen name="fragmentAccountActivity_tabLayoutAccountActivity_marginBottom">60dp</dimen>
+    <dimen name="fragmentAccountActivity_tabLayoutAccountActivity_layoutWidth">327dp</dimen>
+    <dimen name="fragmentAccountActivity_tabLayoutAccountActivity_layoutHeight">32dp</dimen>
+    <dimen name="fragmentAccountActivity_txt10days_marginStart">16dp</dimen>
+    <dimen name="fragmentAccountActivity_txt90days_marginEnd">16dp</dimen>
+
+    <dimen name="customDialog_btnCancel_marginStart">30dp</dimen>
+    <dimen name="customDialog_btnConfirm_marginEnd">30dp</dimen>
+    <dimen name="customDialog_middleLayout_padding">20dp</dimen>
+</resources>

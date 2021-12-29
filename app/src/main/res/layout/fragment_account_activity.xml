@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
@@ -11,21 +12,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <RelativeLayout
-        android:id="@+id/topLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
 
-    </RelativeLayout>
 
         <RelativeLayout
-            android:background="@drawable/background_layout"
             android:id="@+id/headerLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/topLayout"
-            android:layout_marginTop="@dimen/fragmentAccountActivity_layout_marginTop">
+            android:layout_alignParentTop="true"
+            android:background="@drawable/background_layout">
 
             <TextView
                 android:id="@+id/txtHeaderTitle"
@@ -71,12 +65,16 @@
                 android:layout_marginTop="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_marginTop"
                 android:layout_marginEnd="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_marginEnd"
                 android:layout_marginBottom="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_marginBottom"
+                android:background="@drawable/background_tablayout"
                 android:orientation="horizontal">
 
                 <TextView
+                    android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
+                    android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
                     android:id="@+id/txt10days"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/fragmentAccountActivity_txt10days_marginStart"
                     android:layout_weight="1"
                     android:background="@drawable/background_textlayout"
                     android:clickable="true"
@@ -90,15 +88,20 @@
                     android:id="@+id/txt30days"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
+                    android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
                     android:layout_weight="1"
                     android:background="@drawable/background_textlayout"
                     android:gravity="center"
                     android:text="@string/fragmentAccountActivity_txt30days_text" />
 
                 <TextView
+                    android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
+                    android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
                     android:id="@+id/txt90days"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/fragmentAccountActivity_txt90days_marginEnd"
                     android:layout_weight="1"
                     android:background="@drawable/background_textlayout"
                     android:gravity="center"
@@ -107,11 +110,12 @@
 
             <TextView
                 android:id="@+id/txtAccountDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/fragmentAccountActivity_txtAccountDate_layoutWidth"
+                android:layout_height="@dimen/fragmentAccountActivity_txtAccountDate_layoutHeight"
                 android:layout_below="@+id/linearLayoutDaySelect"
                 android:layout_alignParentStart="true"
                 android:background="@color/dark_grey"
+                android:gravity="center"
                 android:text="TEST"
                 android:textColor="@color/white" />
         </RelativeLayout>

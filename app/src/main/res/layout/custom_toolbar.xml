@@ -2,28 +2,30 @@
 <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_height="wrap_content">
 
-    xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/customToolBar_txtBack_layoutWidth"
+            android:layout_height="@dimen/customToolBar_txtBack_layoutHeight"
+            android:layout_marginTop="@dimen/customToolBar_txtBack_marginTop"
             android:layout_toEndOf="@id/iconBack"
-            android:text="Back" />
+            android:text="Back"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/itemAccountActivity_text_size" />
 
         <ImageView
             android:id="@+id/iconBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="8dp"
-            android:padding="8dp"
-            android:src="@drawable/ic_baseline_keyboard_backspace_24"/>
+            android:layout_marginStart="@dimen/customToolBar_iconBack_marginStart"
+            android:padding="@dimen/customToolBar_iconBack_padding"
+            android:src="@drawable/ic_baseline_keyboard_backspace_24" />
     </RelativeLayout>
 
 </androidx.appcompat.widget.Toolbar>

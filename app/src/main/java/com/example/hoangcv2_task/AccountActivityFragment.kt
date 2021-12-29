@@ -24,11 +24,12 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
     private var list90DaySelected: MutableList<AccountActivity> = ArrayList<AccountActivity>()
     @SuppressLint("SimpleDateFormat")
     val timeStamp = SimpleDateFormat("yyyy/MM/dd")
+    val timeStamp2 = SimpleDateFormat("dd MMM yyyy")
     val date: Date = Calendar.getInstance().getTime()
     val dateTest: String = timeStamp.format(date)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.txtAccountDate.text=dateTest
+        binding.txtAccountDate.text=timeStamp2.format(date)
         addData()
         binding.linearLayoutDaySelect.setBackgroundResource(R.drawable.background_tablayout)
         binding.txt10days.setOnClickListener(this)

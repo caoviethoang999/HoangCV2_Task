@@ -27,10 +27,35 @@
     <dimen name="fragmentAccountActivity_tabLayoutAccountActivity_marginBottom">60dp</dimen>
     <dimen name="fragmentAccountActivity_tabLayoutAccountActivity_layoutWidth">327dp</dimen>
     <dimen name="fragmentAccountActivity_tabLayoutAccountActivity_layoutHeight">32dp</dimen>
-    <dimen name="fragmentAccountActivity_txt10days_marginStart">16dp</dimen>
-    <dimen name="fragmentAccountActivity_txt90days_marginEnd">16dp</dimen>
+    <dimen name="fragmentAccountActivity_txt10days_marginStart">2dp</dimen>
+    <dimen name="fragmentAccountActivity_txt90days_marginEnd">2dp</dimen>
+    <dimen name="fragmentAccountActivity_txtAccountDate_layoutHeight">26dp</dimen>
+    <dimen name="fragmentAccountActivity_txtAccountDate_layoutWidth">105dp</dimen>
+    <dimen name="fragmentAccountActivity_txtDaySelected_marginTop">1dp</dimen>
+    <dimen name="fragmentAccountActivity_txtDaySelected_marginBottom">1dp</dimen>
 
-    <dimen name="customDialog_btnCancel_marginStart">30dp</dimen>
-    <dimen name="customDialog_btnConfirm_marginEnd">30dp</dimen>
+    <dimen name="customDialog_btnCancel_marginStart">16dp</dimen>
+    <dimen name="customDialog_btnConfirm_marginEnd">16dp</dimen>
     <dimen name="customDialog_middleLayout_padding">20dp</dimen>
+    <dimen name="customDialog_middleLayout_layoutHeight">88dp</dimen>
+    <dimen name="customDialog_txtMiddle_layoutHeight">42dp</dimen>
+    <dimen name="customDialog_txtMiddle_layoutWidth">295dp</dimen>
+    <dimen name="customDialog_txtMiddle_margin">24dp</dimen>
+    <dimen name="customDialog_layout_margin">16dp</dimen>
+    <dimen name="customDialog_headerLayout_layoutHeight">74dp</dimen>
+    <dimen name="customDialog_txtHeader_layoutHeight">26dp</dimen>
+    <dimen name="customDialog_txtHeader_layoutWidth">307dp</dimen>
+    <dimen name="customDialog_txtHeader_textSize">20dp</dimen>
+    <dimen name="customDialog_bottomLayout_layoutHeight">72dp</dimen>
+    <dimen name="customDialog_btnCancel_layoutHeight">40dp</dimen>
+    <dimen name="customDialog_btnCancel_layoutWidth">151dp</dimen>
+    <dimen name="customDialog_btnConfirm_layoutHeight">40dp</dimen>
+    <dimen name="customDialog_btnConfirm_layoutWidth">151dp</dimen>
+
+    <dimen name="customToolBar_txtBack_layoutWidth">35dp</dimen>
+    <dimen name="customToolBar_txtBack_layoutHeight">21dp</dimen>
+    <dimen name="customToolBar_txtBack_marginTop">8dp</dimen>
+    <dimen name="customToolBar_iconBack_marginStart">8dp</dimen>
+    <dimen name="customToolBar_iconBack_padding">8dp</dimen>
+
 </resources>

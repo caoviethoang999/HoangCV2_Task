@@ -1,57 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@drawable/background_dialog"
+    android:background="@color/transparent"
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:layout_margin="@dimen/customDialog_layout_margin"
+        android:background="@drawable/background_dialog"
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/electric_green">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="@string/customDialog_txtHeaderTitle_text" />
-    </RelativeLayout>
+        <RelativeLayout
 
-    <RelativeLayout
-        android:id="@+id/middleLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/topLayout"
-        android:padding="@dimen/customDialog_middleLayout_padding">
-
-        <TextView
+            android:id="@+id/headerLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/customDialog_txtContent_text"
-            android:textColor="@color/dark_grey" />
+            android:layout_height="@dimen/customDialog_headerLayout_layoutHeight"
+            android:background="@drawable/background_headerdialog">
+
+            <TextView
+                android:layout_width="@dimen/customDialog_txtHeader_layoutWidth"
+                android:layout_height="@dimen/customDialog_txtHeader_layoutHeight"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="@string/customDialog_txtHeaderTitle_text"
+                android:textColor="@color/base_grey"
+                android:textSize="@dimen/customDialog_txtHeader_textSize" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/middleLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/customDialog_middleLayout_layoutHeight"
+            android:layout_below="@id/headerLayout">
+
+            <TextView
+                android:layout_width="@dimen/customDialog_txtMiddle_layoutWidth"
+                android:layout_height="@dimen/customDialog_txtMiddle_layoutHeight"
+                android:layout_centerHorizontal="true"
+                android:layout_margin="@dimen/customDialog_txtMiddle_margin"
+                android:text="@string/customDialog_txtContent_text"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/itemAccountActivity_text_size" />
+        </RelativeLayout>
     </RelativeLayout>
 
     <RelativeLayout
-
+        android:layout_margin="@dimen/customDialog_layout_margin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/middleLayout">
+        android:layout_height="@dimen/customDialog_bottomLayout_layoutHeight"
+        android:layout_below="@id/topLayout"
+        android:background="@drawable/background_dialog">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/btnCancel"
+            android:layout_width="@dimen/customDialog_btnCancel_layoutWidth"
+            android:layout_height="@dimen/customDialog_btnCancel_layoutHeight"
             android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/customDialog_btnCancel_marginStart"
-            android:background="@drawable/background_textlayoutselected"
-            android:text="@string/customDialog_btnCancel_text" />
+
+            android:background="@drawable/background_btncancel"
+            android:text="@string/customDialog_btnCancel_text"
+            android:textColor="@color/deep_electric_green" />
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/btnConfirm"
+            android:layout_width="@dimen/customDialog_btnConfirm_layoutWidth"
+            android:layout_height="@dimen/customDialog_btnConfirm_layoutHeight"
             android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/customDialog_btnConfirm_marginEnd"
             android:background="@drawable/background_button"
-            android:text="@string/customDialog_btnConfirm_text" />
+            android:text="@string/customDialog_btnConfirm_text"
+            android:textColor="@color/deep_electric_green" />
     </RelativeLayout>
 </RelativeLayout>

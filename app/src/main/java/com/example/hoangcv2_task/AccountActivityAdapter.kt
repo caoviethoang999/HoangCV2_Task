@@ -1,10 +1,9 @@
 package com.example.hoangcv2_task
 
+import android.app.ActionBar
 import android.app.Dialog
 import android.graphics.drawable.BitmapDrawable
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -35,7 +34,9 @@ class AccountActivityAdapter :
             val dialog:Dialog = Dialog(holder.itemView.context)
             dialog.setContentView(R.layout.custom_dialog)
             dialog.show()
-
+            val window: Window? = dialog.window
+            window?.setLayout(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT);
+            window?.setGravity(Gravity.BOTTOM)
         }
     }
 

@@ -1,65 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutLeft"
-        android:layout_marginTop="@dimen/itemAccountActivity_constraintLayout_marginTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/itemAccountActivity_constraintLayout_marginStart"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/itemAccountActivity_constraintLayout_marginTop"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    <TextView
-        android:textColor="@color/dark_grey"
-        android:textSize="@dimen/itemAccountActivity_text_size"
-        android:text="Acc 1.1234567A"
-        android:id="@+id/accountName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-    <TextView
-        android:textColor="@color/dark_grey"
-        android:layout_marginTop="@dimen/itemAccountActivity_text_marginTop"
-        android:textSize="@dimen/itemAccountActivity_text_size"
-        android:text="Credit balance request"
-        android:id="@+id/creditBalanceRequest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/accountName"
-        app:layout_constraintStart_toStartOf="parent"/>
-    <TextView
-        android:layout_marginTop="@dimen/itemAccountActivity_text_marginTop"
-        android:layout_marginBottom="@dimen/itemAccountActivity_viewDetail_marginBottom"
-        android:textSize="@dimen/itemAccountActivity_text_size"
-        android:text="View Detail"
-        android:textColor="@color/dark_electric_green"
-        android:id="@+id/viewDetail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/constraintLayoutLeft"
-        app:layout_constraintTop_toBottomOf="@id/creditBalanceRequest"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/accountName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Acc 1.1234567A"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/itemAccountActivity_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/creditBalanceRequest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/itemAccountActivity_text_marginTop"
+            android:text="Credit balance request"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/itemAccountActivity_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/accountName" />
+
+        <TextView
+            android:id="@+id/viewDetail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/itemAccountActivity_text_marginTop"
+            android:layout_marginBottom="@dimen/itemAccountActivity_viewDetail_marginBottom"
+            android:text="View Detail"
+            android:textColor="@color/dark_electric_green"
+            android:textSize="@dimen/itemAccountActivity_text_size"
+            app:layout_constraintBottom_toBottomOf="@id/constraintLayoutLeft"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/creditBalanceRequest" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/itemAccountActivity_constraintLayout_marginTop"
         android:layout_marginEnd="@dimen/itemAccountActivity_constraintLayout_marginEnd"
-        android:id="@+id/constraintLayoutRight"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        app:layout_constraintTop_toTopOf="parent">
+
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:background="@drawable/background_status"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/constraintLayoutStatus"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_status"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/status"
@@ -75,15 +80,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    <TextView
-        android:textColor="@color/dark_grey"
-        android:layout_marginTop="@dimen/itemAccountActivity_text_marginTop"
-        android:textSize="@dimen/itemAccountActivity_accountID_size"
-        android:text="ID#151320430"
-        android:id="@+id/accountID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayoutStatus"
-        app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:id="@+id/accountID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/itemAccountActivity_text_marginTop"
+            android:text="ID#151320430"
+            android:textColor="@color/dark_grey"
+            android:textSize="@dimen/itemAccountActivity_accountID_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/constraintLayoutStatus" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

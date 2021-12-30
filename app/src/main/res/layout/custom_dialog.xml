@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/transparent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
 
     <RelativeLayout
-        android:layout_margin="@dimen/customDialog_layout_margin"
-        android:background="@drawable/background_dialog"
         android:id="@+id/topLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/customDialog_layout_margin"
+        android:background="@drawable/background_dialog">
 
         <RelativeLayout
 
@@ -46,10 +46,10 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_margin="@dimen/customDialog_layout_margin"
         android:layout_width="match_parent"
         android:layout_height="@dimen/customDialog_bottomLayout_layoutHeight"
         android:layout_below="@id/topLayout"
+        android:layout_margin="@dimen/customDialog_layout_margin"
         android:background="@drawable/background_dialog">
 
         <Button

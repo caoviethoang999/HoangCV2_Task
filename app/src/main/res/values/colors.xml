@@ -12,7 +12,7 @@
     <color name="base_grey">#3D3D3B</color>
     <color name="medium_grey">#9C9C9C</color>
     <color name="dark_electric_green">#0F6B30</color>
-    <color name="electric_green"> #1ED760</color>
-    <color name="deep_electric_green"> #09411D</color>
-    <color name="transparent"> #7F000000</color>
+    <color name="electric_green">#1ED760</color>
+    <color name="deep_electric_green">#09411D</color>
+    <color name="transparent">#7F000000</color>
 </resources>

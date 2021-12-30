@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/white"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
 
     android:fillViewport="true"
     tools:context=".AccountActivityFragment">
@@ -69,12 +69,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
-                    android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
                     android:id="@+id/txt10days"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/fragmentAccountActivity_txt10days_marginStart"
+                    android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
+                    android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
                     android:layout_weight="1"
                     android:background="@drawable/background_textlayout"
                     android:clickable="true"
@@ -96,12 +96,12 @@
                     android:text="@string/fragmentAccountActivity_txt30days_text" />
 
                 <TextView
-                    android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
-                    android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
                     android:id="@+id/txt90days"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
                     android:layout_marginEnd="@dimen/fragmentAccountActivity_txt90days_marginEnd"
+                    android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
                     android:layout_weight="1"
                     android:background="@drawable/background_textlayout"
                     android:gravity="center"
@@ -121,16 +121,16 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:background="@drawable/background_layout"
             android:id="@+id/recyclerViewLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/tabLayout">
+            android:layout_below="@id/tabLayout"
+            android:background="@drawable/background_layout">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewAccountActivity"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </RelativeLayout>
-</RelativeLayout>
+    </RelativeLayout>
 </ScrollView>

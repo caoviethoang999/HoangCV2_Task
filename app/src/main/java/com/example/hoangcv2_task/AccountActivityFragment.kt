@@ -2,32 +2,38 @@ package com.example.hoangcv2_task
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hoangcv2_task.database.AccountActivityDatabase
 import com.example.hoangcv2_task.database.AccountActivityRepository
 import com.example.hoangcv2_task.databinding.FragmentAccountActivityBinding
 import com.example.hoangcv2_task.model.AccountActivity
+import com.example.hoangcv2_task.model.AccountStatus
+import com.example.hoangcv2_task.model.AccountTest
 import com.example.hoangcv2_task.viewmodel.AccountActivityViewModel
 import com.example.hoangcv2_task.viewmodel.AccountActivityViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AccountActivityFragment : Fragment(), View.OnClickListener {
+class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickListener {
 
     private lateinit var viewModel: AccountActivityViewModel
     private lateinit var binding: FragmentAccountActivityBinding
     private lateinit var accountActivityAdapter: AccountActivityAdapter
-    private var list: MutableList<AccountActivity> = ArrayList<AccountActivity>()
-    private var listCheckDate: MutableList<AccountActivity> = ArrayList<AccountActivity>()
-    private var list10DaySelected: MutableList<AccountActivity> = ArrayList<AccountActivity>()
-    private var list30DaySelected: MutableList<AccountActivity> = ArrayList<AccountActivity>()
-    private var list90DaySelected: MutableList<AccountActivity> = ArrayList<AccountActivity>()
+    private var networkConfig=NetworkConfig()
+    private var listAccountActivity: MutableList<AccountTest> = ArrayList<AccountTest>()
+    private var listCheckDate: MutableList<AccountStatus> = ArrayList<AccountStatus>()
+    private var list10DaySelected: MutableList<AccountTest> = ArrayList<AccountTest>()
+    private var list30DaySelected: MutableList<AccountTest> = ArrayList<AccountTest>()
+    private var list90DaySelected: MutableList<AccountTest> = ArrayList<AccountTest>()
 
     @SuppressLint("SimpleDateFormat")
     val timeStamp = SimpleDateFormat("yyyy/MM/dd")
@@ -39,7 +45,6 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupUi()
         addData()
-        fetchData()
         displayData()
         binding.txt10days.setOnClickListener(this)
         binding.txt30days.setOnClickListener(this)
@@ -50,7 +55,7 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
         viewModel.insertAccountActivity(
             AccountActivity(
                 "Acc 1.1234567A",
-                "PENDING",
+                3,
                 timeStamp.parse("2021/12/28")!!,
                 "ID#151320430"
             )
@@ -58,7 +63,7 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
         viewModel.insertAccountActivity(
             AccountActivity(
                 "Acc 1.1234567B",
-                "PENDING",
+                1,
                 timeStamp.parse("2021/12/27")!!,
                 "ID#151320431"
             )
@@ -66,7 +71,7 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
         viewModel.insertAccountActivity(
             AccountActivity(
                 "Acc 1.1234567C",
-                "PENDING",
+                1,
                 timeStamp.parse("2021/12/23")!!,
                 "ID#151320432"
             )
@@ -74,7 +79,7 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
         viewModel.insertAccountActivity(
             AccountActivity(
                 "Acc 1.1234567D",
-                "PENDING",
+                2,
                 timeStamp.parse("2021/12/24")!!,
                 "ID#151320433"
             )
@@ -82,7 +87,7 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
         viewModel.insertAccountActivity(
             AccountActivity(
                 "Acc 1.1234567E",
-                "PENDING",
+                3,
                 timeStamp.parse("2021/12/28")!!,
                 "ID#151320434"
             )
@@ -90,49 +95,72 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
         viewModel.insertAccountActivity(
             AccountActivity(
                 "Acc 1.1234567F",
-                "PENDING",
+                2,
                 timeStamp.parse("2021/12/30")!!,
                 "ID#151320436"
             )
         )
+        if (checkDataAccountStatus().isEmpty()){
+            addDataFromRemote()
+        }
     }
 
+    private fun addDataFromRemote(){
+        viewModel.selectAllAccountStatusRemote()
+        viewModel.accountStatusRemoteList.observe(viewLifecycleOwner,{
+            for (i in 0 until it.size) {
+                viewModel.insertAccountStatus(
+                    AccountStatus(
+                        it[i].statusID,
+                        it[i].statusName
+                    )
+                )
+            }
+        })
+    }
+    private fun checkDataAccountStatus():MutableList<AccountStatus>{
+        var list:MutableList<AccountStatus> = ArrayList<AccountStatus>()
+        viewModel.selectAllAccountStatus()
+        viewModel.accountStatusList.observe(viewLifecycleOwner,{
+            list=it
+        })
+        return list
+    }
     private fun setupUi() {
         binding.txtAccountDate.text = timeStampDateUi.format(date)
         binding.recyclerViewAccountActivity.layoutManager = LinearLayoutManager(requireContext())
-        accountActivityAdapter = AccountActivityAdapter()
+        accountActivityAdapter = AccountActivityAdapter(this)
     }
 
-    private fun fetchData() {
-        viewModel.selectAllAccountActivity()
-        viewModel.accountActivityList.observe(requireActivity(), {
-            list = it
-        })
-    }
 
     private fun displayData() {
-        viewModel.selectAllAccountActivityByDate(timeStamp.parse(dateTest)!!)
-        viewModel.accountActivityListByDate.observe(requireActivity(), {
-            listCheckDate = it
-            accountActivityAdapter.getAll(listCheckDate)
+        viewModel.getAllDataTest()
+        viewModel.accountTestList.observe(viewLifecycleOwner, {
+            listAccountActivity = it
+            accountActivityAdapter.getAll(listAccountActivity)
             binding.recyclerViewAccountActivity.adapter = accountActivityAdapter
         })
     }
 
+
     private fun selectDataDaysSelected(daySelected: Enum.DaySelected) {
         when (daySelected) {
             Enum.DaySelected.TEN_DAYS -> {
-                for (i in 0 until list.size) {
-                    val dateConvert: String = timeStamp.format(list[i].accountDate)
+                for (i in 0 until listAccountActivity.size) {
+                    val dateConvert: String = timeStamp.format(listAccountActivity[i].accountActivity.accountDate)
                     if (getDay(dateConvert) < 10 && binding.txt10days.isSelected) {
                         list10DaySelected.add(
-                            AccountActivity(
-                                list[i].accountName,
-                                list[i].accountStatus,
-                                list[i].accountDate,
-                                list[i].accountID
-                            )
-                        )
+                            AccountTest(AccountActivity(
+                                listAccountActivity[i].accountActivity.accountName,
+                                listAccountActivity[i].accountActivity.accountWithStatusID,
+                                listAccountActivity[i].accountActivity.accountDate,
+                                listAccountActivity[i].accountActivity.accountID
+                            ),
+                                AccountStatus(
+                                    listAccountActivity[i].accountStatus.statusID,
+                                    listAccountActivity[i].accountStatus.statusName
+                                )
+                        ))
                     }
                     list90DaySelected.removeAll(list90DaySelected)
                     list30DaySelected.removeAll(list30DaySelected)
@@ -141,17 +169,21 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
                 }
             }
             Enum.DaySelected.THIRTY_DAYS -> {
-                for (i in 0 until list.size) {
-                    val dateConvert: String = timeStamp.format(list[i].accountDate)
+                for (i in 0 until listAccountActivity.size) {
+                    val dateConvert: String = timeStamp.format(listAccountActivity[i].accountActivity.accountDate)
                     if (getDay(dateConvert) in 11..29 && binding.txt30days.isSelected) {
                         list30DaySelected.add(
-                            AccountActivity(
-                                list[i].accountName,
-                                list[i].accountStatus,
-                                list[i].accountDate,
-                                list[i].accountID
-                            )
-                        )
+                            AccountTest(AccountActivity(
+                                listAccountActivity[i].accountActivity.accountName,
+                                listAccountActivity[i].accountActivity.accountWithStatusID,
+                                listAccountActivity[i].accountActivity.accountDate,
+                                listAccountActivity[i].accountActivity.accountID
+                            ),
+                                AccountStatus(
+                                    listAccountActivity[i].accountStatus.statusID,
+                                    listAccountActivity[i].accountStatus.statusName
+                                )
+                            ))
                     }
                     list90DaySelected.removeAll(list90DaySelected)
                     list10DaySelected.removeAll(list10DaySelected)
@@ -160,17 +192,21 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
                 }
             }
             Enum.DaySelected.NINETY_DAYS -> {
-                for (i in 0 until list.size) {
-                    val dateConvert: String = timeStamp.format(list[i].accountDate)
+                for (i in 0 until listAccountActivity.size) {
+                    val dateConvert: String = timeStamp.format(listAccountActivity[i].accountActivity.accountDate)
                     if (getDay(dateConvert) in 29..89 && binding.txt90days.isSelected) {
                         list90DaySelected.add(
-                            AccountActivity(
-                                list[i].accountName,
-                                list[i].accountStatus,
-                                list[i].accountDate,
-                                list[i].accountID
-                            )
-                        )
+                            AccountTest(AccountActivity(
+                                listAccountActivity[i].accountActivity.accountName,
+                                listAccountActivity[i].accountActivity.accountWithStatusID,
+                                listAccountActivity[i].accountActivity.accountDate,
+                                listAccountActivity[i].accountActivity.accountID
+                            ),
+                                AccountStatus(
+                                    listAccountActivity[i].accountStatus.statusID,
+                                    listAccountActivity[i].accountStatus.statusName
+                                )
+                            ))
                     }
                     list30DaySelected.removeAll(list30DaySelected)
                     list10DaySelected.removeAll(list10DaySelected)
@@ -218,19 +254,10 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
     ): View {
         setHasOptionsMenu(true)
         val accountActivityRepository =
-            AccountActivityRepository(AccountActivityDatabase(requireContext()))
+            AccountActivityRepository(AccountActivityDatabase(requireContext()), networkConfig.getInstance())
         val factory = AccountActivityViewModelFactory(accountActivityRepository)
-        viewModel =
-            ViewModelProvider(requireActivity(), factory).get(AccountActivityViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), factory).get(AccountActivityViewModel::class.java)
         binding = FragmentAccountActivityBinding.inflate(inflater, container, false)
-//        RxJavaPlugins.setErrorHandler { e ->
-//            if (e is UndeliverableException) {
-//            } else {
-//                Thread.currentThread().also { thread ->
-//                    thread.uncaughtExceptionHandler.uncaughtException(thread, e)
-//                }
-//            }
-//        }
         return binding.root
     }
 
@@ -240,6 +267,9 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
                 binding.txt10days.isSelected = true
                 binding.txt30days.isSelected = false
                 binding.txt90days.isSelected = false
+                binding.txt10days.isClickable=false
+                binding.txt30days.isClickable=true
+                binding.txt90days.isClickable=true
                 selectDay()
                 selectDataDaysSelected(Enum.DaySelected.TEN_DAYS)
 
@@ -248,6 +278,9 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
                 binding.txt10days.isSelected = false
                 binding.txt30days.isSelected = true
                 binding.txt90days.isSelected = false
+                binding.txt30days.isClickable=false
+                binding.txt10days.isClickable=true
+                binding.txt90days.isClickable=true
                 selectDay()
                 selectDataDaysSelected(Enum.DaySelected.THIRTY_DAYS)
             }
@@ -255,9 +288,41 @@ class AccountActivityFragment : Fragment(), View.OnClickListener {
                 binding.txt10days.isSelected = false
                 binding.txt30days.isSelected = false
                 binding.txt90days.isSelected = true
+                binding.txt90days.isClickable=false
+                binding.txt10days.isClickable=true
+                binding.txt30days.isClickable=true
                 selectDay()
                 selectDataDaysSelected(Enum.DaySelected.NINETY_DAYS)
             }
         }
+    }
+
+    override fun onItemClick(position: Int) {
+        val fragment = CreditBalanceRequestFragment()
+        val bundle = Bundle()
+        if(list30DaySelected.size>0 && binding.txt30days.isSelected){
+            bundle.putString("accountName", list30DaySelected[position].accountActivity.accountName)
+            bundle.putString("accountID", list30DaySelected[position].accountActivity.accountID)
+            bundle.putString("statusName", list30DaySelected[position].accountStatus.statusName)
+            bundle.putString("accountDate", timeStampDateUi.format(list30DaySelected[position].accountActivity.accountDate))
+        }else if (list10DaySelected.size>0 && binding.txt10days.isSelected){
+            bundle.putString("accountName", list10DaySelected[position].accountActivity.accountName)
+            bundle.putString("accountID", list10DaySelected[position].accountActivity.accountID)
+            bundle.putString("statusName", list10DaySelected[position].accountStatus.statusName)
+            bundle.putString("accountDate", timeStampDateUi.format(list10DaySelected[position].accountActivity.accountDate))
+        }else if(list90DaySelected.size>0 && binding.txt90days.isSelected){
+            bundle.putString("accountName", list90DaySelected[position].accountActivity.accountName)
+            bundle.putString("accountID", list90DaySelected[position].accountActivity.accountID)
+            bundle.putString("statusName", list90DaySelected[position].accountStatus.statusName)
+            bundle.putString("accountDate", timeStampDateUi.format(list90DaySelected[position].accountActivity.accountDate))
+        }else if(listAccountActivity.size>0){
+            bundle.putString("accountName", listAccountActivity[position].accountActivity.accountName)
+            bundle.putString("accountID", listAccountActivity[position].accountActivity.accountID)
+            bundle.putString("statusName", listAccountActivity[position].accountStatus.statusName)
+            bundle.putString("accountDate", timeStampDateUi.format(listAccountActivity[position].accountActivity.accountDate))
+        }
+        fragment.arguments = bundle
+        activity?.supportFragmentManager?.beginTransaction()
+            ?.addToBackStack(null)?.replace(R.id.fragment_container, fragment)?.commit()
     }
 }

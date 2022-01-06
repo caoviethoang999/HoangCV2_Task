@@ -9,4 +9,6 @@
     <string name="customDialog_txtContent_text">Are you sure you want to refund via Credit card?</string>
     <string name="customDialog_btnCancel_text">Cancel</string>
     <string name="customDialog_btnConfirm_text">Confirm</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

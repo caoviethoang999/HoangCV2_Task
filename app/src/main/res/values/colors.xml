@@ -15,4 +15,6 @@
     <color name="electric_green">#1ED760</color>
     <color name="deep_electric_green">#09411D</color>
     <color name="transparent">#7F000000</color>
+    <color name="canvas_astra_pink">#FEF5F9</color>
+    <color name="dark_astra_pink">#8A2252</color>
 </resources>

@@ -7,9 +7,10 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.hoangcv2_task.Converters
 import com.example.hoangcv2_task.model.AccountActivity
+import com.example.hoangcv2_task.model.AccountStatus
 
 @Database(
-    entities = [AccountActivity::class],
+    entities = [AccountActivity::class, AccountStatus::class],
     version = 1,
     exportSchema = false
 )

@@ -62,7 +62,7 @@
             android:id="@+id/constraintLayoutStatus"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_status"
+            android:background="@drawable/background_status_pending"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

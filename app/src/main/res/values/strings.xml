@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Account Activity</string>
+    <string name="fragmentAccountActivity_txt10days_text">10 days</string>
+    <string name="fragmentAccountActivity_txt30days_text">30 days</string>
+    <string name="fragmentAccountActivity_txt90days_text">90 days</string>
+    <string name="fragmentAccountActivity_txtHeaderTitle_text">Account Activity</string>
+    <string name="fragmentAccountActivity_txtHeaderDescription_text">All the transactions and changes  you’ve made to your account in the past 30 days</string>
+    <string name="customDialog_txtHeaderTitle_text">Refund via GIRO</string>
+    <string name="customDialog_txtContent_text">Are you sure you want to refund via Credit card?</string>
+    <string name="customDialog_btnCancel_text">Cancel</string>
+    <string name="customDialog_btnConfirm_text">Confirm</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

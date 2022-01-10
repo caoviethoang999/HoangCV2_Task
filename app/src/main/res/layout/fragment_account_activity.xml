@@ -118,6 +118,17 @@
                 android:gravity="center"
                 android:text="TEST"
                 android:textColor="@color/white" />
+
+            <com.example.hoangcv2_task.CustomProgressBar
+                android:id="@+id/dots_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayoutDaySelect"
+                android:layout_alignParentEnd="true"
+                app:color="@color/black"
+                app:count="3"
+                app:timeout="10" />
+
         </RelativeLayout>
 
         <RelativeLayout

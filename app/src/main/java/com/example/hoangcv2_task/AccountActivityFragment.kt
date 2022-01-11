@@ -1,11 +1,20 @@
 package com.example.hoangcv2_task
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.*
+import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,8 +31,11 @@ import com.example.hoangcv2_task.viewmodel.AccountActivityViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import androidx.core.content.ContextCompat.getSystemService
+import com.google.android.gms.location.*
 
-class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickListener {
+
+class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickListener{
 
     private lateinit var viewModel: AccountActivityViewModel
     private lateinit var binding: FragmentAccountActivityBinding
@@ -34,6 +46,10 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
     private var list10DaySelected: MutableList<AccountTest> = ArrayList<AccountTest>()
     private var list30DaySelected: MutableList<AccountTest> = ArrayList<AccountTest>()
     private var list90DaySelected: MutableList<AccountTest> = ArrayList<AccountTest>()
+
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var locationRequest: LocationRequest
+    val PERMISSION_ID = 0
 
     @SuppressLint("SimpleDateFormat")
     val timeStamp = SimpleDateFormat("yyyy/MM/dd")
@@ -46,9 +62,112 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
         setupUi()
         addData()
         displayData()
+        getCurrentLocation()
         binding.txt10days.setOnClickListener(this)
         binding.txt30days.setOnClickListener(this)
         binding.txt90days.setOnClickListener(this)
+    }
+
+    fun getCurrentLocation(){
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        RequestPermission()
+        getLastLocation()
+    }
+    @SuppressLint("MissingPermission")
+    fun getLastLocation(){
+        if(CheckPermission()){
+            if(isLocationEnabled()){
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener {task->
+                    var location:Location? = task.result
+                    if(location == null){
+                        NewLocationData()
+                    }else{
+                        Log.d("Debug:" ,"Your Location:"+ location.longitude)
+                        binding.txtLocation.text = "You Current Location is : Long: "+ location.longitude + " , Lat: " + location.latitude + "\n" + getCityName(location.latitude,location.longitude)
+                    }
+                }
+            }else{
+                Toast.makeText(requireActivity(),"Please Turn on Your device Location", Toast.LENGTH_SHORT).show()
+            }
+        }else{
+            RequestPermission()
+        }
+    }
+
+
+    @SuppressLint("MissingPermission")
+    fun NewLocationData(){
+        var locationRequest =  LocationRequest()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = 0
+        locationRequest.fastestInterval = 0
+        locationRequest.numUpdates = 1
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        fusedLocationProviderClient!!.requestLocationUpdates(
+            locationRequest,locationCallback, Looper.myLooper()
+        )
+    }
+
+
+    private val locationCallback = object : LocationCallback(){
+        override fun onLocationResult(locationResult: LocationResult) {
+            var lastLocation: Location = locationResult.lastLocation
+            Log.d("Debug:","your last last location: "+ lastLocation.longitude.toString())
+            binding.txtLocation.text = "You Last Location is : Long: "+ lastLocation.longitude + " , Lat: " + lastLocation.latitude + "\n" + getCityName(lastLocation.latitude,lastLocation.longitude)
+        }
+    }
+
+    private fun CheckPermission():Boolean{
+        if(
+            ActivityCompat.checkSelfPermission(requireActivity(),android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ActivityCompat.checkSelfPermission(requireActivity(),android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        ){
+            return true
+        }
+
+        return false
+
+    }
+
+    fun RequestPermission(){
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,android.Manifest.permission.ACCESS_FINE_LOCATION),
+            PERMISSION_ID
+        )
+    }
+
+    fun isLocationEnabled():Boolean{
+        var locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if(requestCode == PERMISSION_ID){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Log.d("Debug:","You have the Permission")
+            }
+        }
+    }
+
+    private fun getCityName(lat: Double,long: Double):String{
+        var cityName:String = ""
+        var countryName = ""
+        var geoCoder = Geocoder(requireContext(), Locale.getDefault())
+        var address = geoCoder.getFromLocation(lat,long,1)
+
+        // StreetAddress -> StreetAddress Number -> Postal Code -> City -> Country
+        cityName = address[0].getAddressLine(0)
+        //split string cityName after "," to get string of city
+        var getcity:List<String> = cityName.split(", ")
+        countryName = address[0].countryName
+        Log.d("Debug:", "Your City: $cityName ; your Country $countryName")
+        return cityName
     }
 
     private fun addData() {
@@ -253,11 +372,12 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
+
+        binding = FragmentAccountActivityBinding.inflate(inflater, container, false)
         val accountActivityRepository =
-            AccountActivityRepository(AccountActivityDatabase(requireContext()), networkConfig.getInstance())
+            AccountActivityRepository(AccountActivityDatabase(requireContext()), networkConfig.getInstance(),binding)
         val factory = AccountActivityViewModelFactory(accountActivityRepository)
         viewModel = ViewModelProvider(requireActivity(), factory).get(AccountActivityViewModel::class.java)
-        binding = FragmentAccountActivityBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -283,6 +403,7 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
                 binding.txt90days.isClickable=true
                 selectDay()
                 selectDataDaysSelected(Enum.DaySelected.THIRTY_DAYS)
+                getCurrentLocation()
             }
             R.id.txt90days -> {
                 binding.txt10days.isSelected = false
@@ -325,4 +446,5 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
         activity?.supportFragmentManager?.beginTransaction()
             ?.addToBackStack(null)?.replace(R.id.fragment_container, fragment)?.commit()
     }
+
 }

@@ -125,9 +125,17 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linearLayoutDaySelect"
                 android:layout_alignParentEnd="true"
+                android:visibility="invisible"
                 app:color="@color/black"
                 app:count="3"
                 app:timeout="10" />
+
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:id="@+id/txtLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayoutDaySelect"/>
 
         </RelativeLayout>
 

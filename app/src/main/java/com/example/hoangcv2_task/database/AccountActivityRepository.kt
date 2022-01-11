@@ -3,9 +3,13 @@ package com.example.hoangcv2_task.database
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.MutableLiveData
+import androidx.viewbinding.ViewBinding
+import com.example.hoangcv2_task.CustomProgressBar
 import com.example.hoangcv2_task.NetworkConfig
 import com.example.hoangcv2_task.api.AccountActivityService
+import com.example.hoangcv2_task.databinding.FragmentAccountActivityBinding
 import com.example.hoangcv2_task.model.AccountActivity
 import com.example.hoangcv2_task.model.AccountStatus
 import io.reactivex.Completable
@@ -20,7 +24,7 @@ import io.reactivex.Flowable
 import kotlin.collections.ArrayList
 
 
-class AccountActivityRepository(private val accountActivityDatabase: AccountActivityDatabase,private val accountActivityService: AccountActivityService) {
+class AccountActivityRepository(private val accountActivityDatabase: AccountActivityDatabase,private val accountActivityService: AccountActivityService,private val binding: FragmentAccountActivityBinding) {
 
     var accountActivityList = MutableLiveData<MutableList<AccountActivity>>()
     var accountStatusList = MutableLiveData<MutableList<AccountStatus>>()
@@ -93,6 +97,8 @@ class AccountActivityRepository(private val accountActivityDatabase: AccountActi
 
     @SuppressLint("CheckResult")
     fun getAllData():MutableLiveData<MutableList<AccountTest>> {
+        var customProgressBar=binding.dotsProgress
+        customProgressBar.visibility=View.VISIBLE
         val listObservable: Flowable<MutableList<AccountStatus>> = accountActivityDatabase.AccountActivityDAO().getAllAccountStatus()
         val listObservable2: Flowable<MutableList<AccountActivity>> = accountActivityDatabase.AccountActivityDAO().getAllAccountActivity()
         Flowable.zip(listObservable, listObservable2,
@@ -110,7 +116,9 @@ class AccountActivityRepository(private val accountActivityDatabase: AccountActi
             })
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { t -> accountTestList.postValue(t) }
+            .subscribe { t ->
+                customProgressBar.visibility=View.INVISIBLE
+                accountTestList.postValue(t) }
         return accountTestList
     }
     @SuppressLint("CheckResult")

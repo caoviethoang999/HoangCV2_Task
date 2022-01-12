@@ -171,54 +171,65 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
     }
 
     private fun addData() {
-        viewModel.insertAccountActivity(
-            AccountActivity(
-                "Acc 1.1234567A",
-                3,
-                timeStamp.parse("2021/12/28")!!,
-                "ID#151320430"
+//        viewModel.insertAccountActivity(
+//            AccountActivity(
+//                "Acc 1.1234567A",
+//                3,
+//                timeStamp.parse("2021/12/28")!!,
+//                "ID#151320430"
+//            )
+//        )
+//        viewModel.insertAccountActivity(
+//            AccountActivity(
+//                "Acc 1.1234567B",
+//                1,
+//                timeStamp.parse("2021/12/27")!!,
+//                "ID#151320431"
+//            )
+//        )
+//        viewModel.insertAccountActivity(
+//            AccountActivity(
+//                "Acc 1.1234567C",
+//                1,
+//                timeStamp.parse("2021/12/23")!!,
+//                "ID#151320432"
+//            )
+//        )
+//        viewModel.insertAccountActivity(
+//            AccountActivity(
+//                "Acc 1.1234567D",
+//                2,
+//                timeStamp.parse("2021/12/24")!!,
+//                "ID#151320433"
+//            )
+//        )
+//        viewModel.insertAccountActivity(
+//            AccountActivity(
+//                "Acc 1.1234567E",
+//                3,
+//                timeStamp.parse("2021/12/28")!!,
+//                "ID#151320434"
+//            )
+//        )
+//        viewModel.insertAccountActivity(
+//            AccountActivity(
+//                "Acc 1.1234567F",
+//                2,
+//                timeStamp.parse("2021/12/30")!!,
+//                "ID#151320436"
+//            )
+//        )
+        for (i in 0 until 3000){
+            viewModel.insertAccountActivity(
+                AccountActivity(
+                    "Acc 1.1234567F",
+                    2,
+                    timeStamp.parse("2021/12/30")!!,
+                    "ID#15132043$i"
+                )
             )
-        )
-        viewModel.insertAccountActivity(
-            AccountActivity(
-                "Acc 1.1234567B",
-                1,
-                timeStamp.parse("2021/12/27")!!,
-                "ID#151320431"
-            )
-        )
-        viewModel.insertAccountActivity(
-            AccountActivity(
-                "Acc 1.1234567C",
-                1,
-                timeStamp.parse("2021/12/23")!!,
-                "ID#151320432"
-            )
-        )
-        viewModel.insertAccountActivity(
-            AccountActivity(
-                "Acc 1.1234567D",
-                2,
-                timeStamp.parse("2021/12/24")!!,
-                "ID#151320433"
-            )
-        )
-        viewModel.insertAccountActivity(
-            AccountActivity(
-                "Acc 1.1234567E",
-                3,
-                timeStamp.parse("2021/12/28")!!,
-                "ID#151320434"
-            )
-        )
-        viewModel.insertAccountActivity(
-            AccountActivity(
-                "Acc 1.1234567F",
-                2,
-                timeStamp.parse("2021/12/30")!!,
-                "ID#151320436"
-            )
-        )
+        }
+
         if (checkDataAccountStatus().isEmpty()){
             addDataFromRemote()
         }

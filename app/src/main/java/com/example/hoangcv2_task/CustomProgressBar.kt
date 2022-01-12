@@ -1,7 +1,6 @@
 package com.example.hoangcv2_task
 
 import android.content.Context
-import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -10,6 +9,9 @@ import android.view.View
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
 import android.view.animation.Transformation
+import android.animation.ValueAnimator
+import android.graphics.PointF
+
 
 class CustomProgressBar : View {
     private var mDotStep = 20
@@ -19,6 +21,7 @@ class CustomProgressBar : View {
     private var mDotCount = DEF_COUNT
     private var mTimeout = DEF_TIMEOUT
     private var mDotColor = Color.parseColor("#fd583f")
+    private var center=PointF()
 
     constructor(context: Context?) : super(context) {
         initDotSize()
@@ -116,11 +119,11 @@ class CustomProgressBar : View {
     }
 
     companion object {
-        private const val MIN_COUNT = 1
-        private const val DEF_COUNT = 10
-        private const val MAX_COUNT = 100
-        private const val MIN_TIMEOUT = 100
-        private const val DEF_TIMEOUT = 500
-        private const val MAX_TIMEOUT = 3000
+        const val MIN_COUNT = 1
+        const val DEF_COUNT = 10
+        const val MAX_COUNT = 100
+        const val MIN_TIMEOUT = 100
+        const val DEF_TIMEOUT = 500
+        const val MAX_TIMEOUT = 3000
     }
 }

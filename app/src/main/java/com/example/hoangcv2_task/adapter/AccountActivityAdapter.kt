@@ -1,19 +1,12 @@
-package com.example.hoangcv2_task
+package com.example.hoangcv2_task.adapter
 
-import android.app.ActionBar
-import android.app.Dialog
-import android.os.Bundle
-import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.Window
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hoangcv2_task.OnItemClickListener
+import com.example.hoangcv2_task.R
 import com.example.hoangcv2_task.databinding.ItemAccountActivityBinding
-import com.example.hoangcv2_task.model.AccountActivity
-import com.example.hoangcv2_task.model.AccountStatus
 import com.example.hoangcv2_task.model.AccountTest
-import java.util.*
 import kotlin.collections.ArrayList
 
 

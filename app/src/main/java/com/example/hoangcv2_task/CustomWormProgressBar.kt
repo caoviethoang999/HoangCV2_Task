@@ -13,7 +13,7 @@ class CustomWormProgressBar:View,InvalidateListener {
     private var circlesSize:Int=DEF_COUNT
     private lateinit var circles:Array<Circle?>
     private var radius = 0f
-    private val transformations: IntArray = intArrayOf(-2, -1, 0, 1, 2)
+    private val transformations: IntArray = intArrayOf(-2,-1,0,1,2)
     private var center=PointF()
     private var mDotColor = Color.parseColor("#fd583f")
 

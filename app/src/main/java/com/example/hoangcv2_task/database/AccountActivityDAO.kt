@@ -1,5 +1,6 @@
 package com.example.hoangcv2_task.database
 
+import androidx.paging.PagingSource
 import androidx.room.*
 import com.example.hoangcv2_task.model.AccountActivity
 import com.example.hoangcv2_task.model.AccountStatus
@@ -28,4 +29,7 @@ interface AccountActivityDAO {
 
     @Query("SELECT * FROM tblAccountStatus")
     fun getAllAccountStatus2(): Flowable<List<AccountStatus>>
+
+    @Query("SELECT * FROM tblAccountActivity ORDER BY accountID ASC")
+    fun getListAccountActivity() : PagingSource<Int, AccountActivity>
 }

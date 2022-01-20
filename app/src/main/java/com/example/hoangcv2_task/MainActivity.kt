@@ -3,6 +3,7 @@ package com.example.hoangcv2_task
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.hoangcv2_task.databinding.ActivityMainBinding
+import com.example.hoangcv2_task.view.AccountActivityFragment
 
 class MainActivity : AppCompatActivity() {
 

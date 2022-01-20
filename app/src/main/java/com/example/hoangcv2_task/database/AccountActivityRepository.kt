@@ -5,6 +5,8 @@ import android.content.ContentValues.TAG
 import android.util.Log
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import androidx.viewbinding.ViewBinding
 import com.example.hoangcv2_task.CustomProgressBar
 import com.example.hoangcv2_task.NetworkConfig
@@ -43,7 +45,7 @@ class AccountActivityRepository(private val accountActivityDatabase: AccountActi
                 }
 
                 override fun onComplete() {
-                    Log.d(TAG, "onComplete: Called")
+                        Log.d(TAG, "onComplete: Called")
                 }
 
                 override fun onError(e: Throwable) {
@@ -114,7 +116,7 @@ class AccountActivityRepository(private val accountActivityDatabase: AccountActi
                 }
                 listAccountTest
             })
-            .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { t ->
                 customProgressBar.visibility=View.INVISIBLE
@@ -141,5 +143,16 @@ class AccountActivityRepository(private val accountActivityDatabase: AccountActi
             }
         return accountActivityRemoteList
     }
+
+    val productList = Pager(
+        PagingConfig(
+            pageSize = 100,
+            enablePlaceholders = true,
+            maxSize = 1000
+        )
+    ) {
+        accountActivityDatabase.AccountActivityDAO().getListAccountActivity()
+    }.flow
+
 }
 

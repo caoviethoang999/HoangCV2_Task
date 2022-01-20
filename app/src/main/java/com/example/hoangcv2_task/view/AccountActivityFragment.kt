@@ -1,25 +1,25 @@
-package com.example.hoangcv2_task
+package com.example.hoangcv2_task.view
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.*
-import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.hoangcv2_task.*
+import com.example.hoangcv2_task.Enum
+import com.example.hoangcv2_task.R
 import com.example.hoangcv2_task.database.AccountActivityDatabase
 import com.example.hoangcv2_task.database.AccountActivityRepository
 import com.example.hoangcv2_task.databinding.FragmentAccountActivityBinding
@@ -31,16 +31,21 @@ import com.example.hoangcv2_task.viewmodel.AccountActivityViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import androidx.core.content.ContextCompat.getSystemService
+import com.example.hoangcv2_task.adapter.AccountActivityAdapter
+import com.example.hoangcv2_task.adapter.AccountActivityPagingAdapter
 import com.google.android.gms.location.*
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 
-class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickListener{
+class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickListener,
+    ViewTreeObserver.OnScrollChangedListener {
 
     private lateinit var viewModel: AccountActivityViewModel
     private lateinit var binding: FragmentAccountActivityBinding
     private lateinit var accountActivityAdapter: AccountActivityAdapter
-    private var networkConfig=NetworkConfig()
+    private lateinit var accountActivityPagingAdapter: AccountActivityPagingAdapter
+    private var networkConfig= NetworkConfig()
     private var listAccountActivity: MutableList<AccountTest> = ArrayList<AccountTest>()
     private var listCheckDate: MutableList<AccountStatus> = ArrayList<AccountStatus>()
     private var list10DaySelected: MutableList<AccountTest> = ArrayList<AccountTest>()
@@ -50,7 +55,8 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
     lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest: LocationRequest
     val PERMISSION_ID = 0
-
+    var page = 0
+    var limit:Int = 2
     @SuppressLint("SimpleDateFormat")
     val timeStamp = SimpleDateFormat("yyyy/MM/dd")
     @SuppressLint("SimpleDateFormat")
@@ -61,11 +67,12 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
         super.onViewCreated(view, savedInstanceState)
         setupUi()
         addData()
-        displayData()
-        getCurrentLocation()
+        displayData(page,limit)
+//        getCurrentLocation()
         binding.txt10days.setOnClickListener(this)
         binding.txt30days.setOnClickListener(this)
         binding.txt90days.setOnClickListener(this)
+        binding.test.viewTreeObserver.addOnScrollChangedListener(this)
     }
 
     fun getCurrentLocation(){
@@ -219,7 +226,7 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
 //                "ID#151320436"
 //            )
 //        )
-        for (i in 0 until 3000){
+        for (i in 0 until 1000){
             viewModel.insertAccountActivity(
                 AccountActivity(
                     "Acc 1.1234567F",
@@ -260,16 +267,28 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
         binding.txtAccountDate.text = timeStampDateUi.format(date)
         binding.recyclerViewAccountActivity.layoutManager = LinearLayoutManager(requireContext())
         accountActivityAdapter = AccountActivityAdapter(this)
+        accountActivityPagingAdapter = AccountActivityPagingAdapter()
+        binding.recyclerViewAccountActivity.adapter = accountActivityPagingAdapter
     }
 
 
-    private fun displayData() {
-        viewModel.getAllDataTest()
-        viewModel.accountTestList.observe(viewLifecycleOwner, {
-            listAccountActivity = it
-            accountActivityAdapter.getAll(listAccountActivity)
-            binding.recyclerViewAccountActivity.adapter = accountActivityAdapter
-        })
+    private fun displayData(page:Int, limit:Int) {
+        if (page > limit) {
+
+//            binding.dotsProgress.visibility = View.GONE
+            return
+        }
+//        viewModel.getAllDataTest()
+//        viewModel.accountTestList.observe(viewLifecycleOwner, {
+//            listAccountActivity = it
+//            accountActivityAdapter.getAll(listAccountActivity)
+//            binding.recyclerViewAccountActivity.adapter = accountActivityAdapter
+//        })
+        lifecycleScope.launch {
+            viewModel.productList.collectLatest {
+                accountActivityPagingAdapter.submitData(it)
+            }
+        }
     }
 
 
@@ -456,6 +475,17 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
         fragment.arguments = bundle
         activity?.supportFragmentManager?.beginTransaction()
             ?.addToBackStack(null)?.replace(R.id.fragment_container, fragment)?.commit()
+    }
+
+    override fun onScrollChanged() {
+        val scrollY: Int = binding.test.scrollY
+        val scrollX: Int = binding.test.scrollX
+        if (scrollY == binding.test.getChildAt(0).measuredHeight - binding.test.measuredHeight) {
+            Toast.makeText(requireContext(), "That's all the data..", Toast.LENGTH_SHORT).show()
+            page++
+            binding.dotsProgress.visibility = View.VISIBLE
+            displayData(page, limit)
+        }
     }
 
 }

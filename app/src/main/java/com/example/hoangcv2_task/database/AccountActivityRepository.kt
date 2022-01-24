@@ -99,8 +99,6 @@ class AccountActivityRepository(private val accountActivityDatabase: AccountActi
 
     @SuppressLint("CheckResult")
     fun getAllData():MutableLiveData<MutableList<AccountTest>> {
-        var customProgressBar=binding.dotsProgress
-        customProgressBar.visibility=View.VISIBLE
         val listObservable: Flowable<MutableList<AccountStatus>> = accountActivityDatabase.AccountActivityDAO().getAllAccountStatus()
         val listObservable2: Flowable<MutableList<AccountActivity>> = accountActivityDatabase.AccountActivityDAO().getAllAccountActivity()
         Flowable.zip(listObservable, listObservable2,
@@ -119,7 +117,6 @@ class AccountActivityRepository(private val accountActivityDatabase: AccountActi
             .subscribeOn(Schedulers.newThread())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { t ->
-                customProgressBar.visibility=View.INVISIBLE
                 accountTestList.postValue(t) }
         return accountTestList
     }

@@ -1,155 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:id="@+id/test"
     android:layout_height="match_parent"
     android:background="@color/white"
 
     android:fillViewport="true"
     tools:context=".view.AccountActivityFragment">
 
-    <RelativeLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
-        <RelativeLayout
-            android:id="@+id/headerLayout"
+        <ScrollView
+            android:id="@+id/test"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <RelativeLayout
+                    android:visibility="gone"
+                    android:id="@+id/refreshTopLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true">
+
+                    <ImageView
+                        android:id="@+id/refreshLayoutImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_baseline_arrow_downward_24" />
+                    <TextView
+                        android:layout_below="@id/refreshLayoutImageView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:text="Pull To Refresh" />
+
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/headerLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/refreshTopLayout"
+                    android:background="@drawable/background_layout">
+
+                    <TextView
+                        android:id="@+id/txtHeaderTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/fragmentAccountActivity_txtHeaderTitle_marginStart"
+                        android:layout_marginTop="@dimen/fragmentAccountActivity_txtHeaderTitle_marginTop"
+                        android:layout_marginEnd="@dimen/fragmentAccountActivity_txtHeaderTitle_marginEnd"
+                        android:text="@string/fragmentAccountActivity_txtHeaderTitle_text"
+                        android:textColor="@color/base_grey"
+                        android:textSize="@dimen/fragmentAccountActivity_txtHeaderTitle_textSize">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/txtHeaderDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/txtHeaderTitle"
+                        android:layout_marginStart="@dimen/fragmentAccountActivity_txtHeaderDescription_marginStart"
+                        android:layout_marginTop="@dimen/fragmentAccountActivity_txtHeaderDescription_marginTop"
+                        android:layout_marginEnd="@dimen/fragmentAccountActivity_txtHeaderDescription_marginEnd"
+                        android:layout_marginBottom="@dimen/fragmentAccountActivity_txtHeaderDescription_marginBottom"
+                        android:text="@string/fragmentAccountActivity_txtHeaderDescription_text"
+                        android:textColor="@color/medium_grey"
+                        android:textSize="@dimen/fragmentAccountActivity_txtHeaderDescription_textSize">
+
+                    </TextView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/tabLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/headerLayout"
+                    android:background="@drawable/background_layout">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayoutDaySelect"
+                        android:layout_width="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_layoutWidth"
+                        android:layout_height="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_layoutHeight"
+                        android:layout_marginStart="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_marginStart"
+                        android:layout_marginTop="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_marginTop"
+                        android:layout_marginEnd="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_marginEnd"
+                        android:layout_marginBottom="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_marginBottom"
+                        android:background="@drawable/background_tablayout"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/txt10days"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="@dimen/fragmentAccountActivity_txt10days_marginStart"
+                            android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
+                            android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_textlayout"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:text="@string/fragmentAccountActivity_txt10days_text"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/txt30days"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
+                            android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_textlayout"
+                            android:gravity="center"
+                            android:text="@string/fragmentAccountActivity_txt30days_text" />
+
+                        <TextView
+                            android:id="@+id/txt90days"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
+                            android:layout_marginEnd="@dimen/fragmentAccountActivity_txt90days_marginEnd"
+                            android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
+                            android:layout_weight="1"
+                            android:background="@drawable/background_textlayout"
+                            android:gravity="center"
+                            android:text="@string/fragmentAccountActivity_txt90days_text" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/txtAccountDate"
+                        android:layout_width="@dimen/fragmentAccountActivity_txtAccountDate_layoutWidth"
+                        android:layout_height="@dimen/fragmentAccountActivity_txtAccountDate_layoutHeight"
+                        android:layout_below="@+id/linearLayoutDaySelect"
+                        android:layout_alignParentStart="true"
+                        android:background="@color/dark_grey"
+                        android:gravity="center"
+                        android:text="TEST"
+                        android:textColor="@color/white" />
+
+
+                    <TextView
+                        android:id="@+id/txtLocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/linearLayoutDaySelect"
+                        android:layout_centerHorizontal="true" />
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/recyclerViewLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tabLayout"
+                    android:background="@drawable/background_layout">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewAccountActivity"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
+        android:id="@+id/progressBarHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.4"
+        android:animateLayoutChanges="true"
+        android:background="@color/base_grey"
+        android:clickable="true"
+        android:visibility="gone">
+
+        <com.example.hoangcv2_task.CustomWormProgressBar
+            android:id="@+id/progressBarWorm"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/background_layout">
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:indeterminate="true" />
 
-            <TextView
-                android:id="@+id/txtHeaderTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/fragmentAccountActivity_txtHeaderTitle_marginStart"
-                android:layout_marginTop="@dimen/fragmentAccountActivity_txtHeaderTitle_marginTop"
-                android:layout_marginEnd="@dimen/fragmentAccountActivity_txtHeaderTitle_marginEnd"
-                android:text="@string/fragmentAccountActivity_txtHeaderTitle_text"
-                android:textColor="@color/base_grey"
-                android:textSize="@dimen/fragmentAccountActivity_txtHeaderTitle_textSize">
-
-            </TextView>
-
-            <TextView
-                android:id="@+id/txtHeaderDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtHeaderTitle"
-                android:layout_marginStart="@dimen/fragmentAccountActivity_txtHeaderDescription_marginStart"
-                android:layout_marginTop="@dimen/fragmentAccountActivity_txtHeaderDescription_marginTop"
-                android:layout_marginEnd="@dimen/fragmentAccountActivity_txtHeaderDescription_marginEnd"
-                android:layout_marginBottom="@dimen/fragmentAccountActivity_txtHeaderDescription_marginBottom"
-                android:text="@string/fragmentAccountActivity_txtHeaderDescription_text"
-                android:textColor="@color/medium_grey"
-                android:textSize="@dimen/fragmentAccountActivity_txtHeaderDescription_textSize">
-
-            </TextView>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/tabLayout"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/headerLayout"
-            android:background="@drawable/background_layout">
-
-            <LinearLayout
-                android:id="@+id/linearLayoutDaySelect"
-                android:layout_width="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_layoutWidth"
-                android:layout_height="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_layoutHeight"
-                android:layout_marginStart="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_marginStart"
-                android:layout_marginTop="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_marginTop"
-                android:layout_marginEnd="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_marginEnd"
-                android:layout_marginBottom="@dimen/fragmentAccountActivity_tabLayoutAccountActivity_marginBottom"
-                android:background="@drawable/background_tablayout"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/txt10days"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/fragmentAccountActivity_txt10days_marginStart"
-                    android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
-                    android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_textlayout"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:text="@string/fragmentAccountActivity_txt10days_text"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:id="@+id/txt30days"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
-                    android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_textlayout"
-                    android:gravity="center"
-                    android:text="@string/fragmentAccountActivity_txt30days_text" />
-
-                <TextView
-                    android:id="@+id/txt90days"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/fragmentAccountActivity_txtDaySelected_marginTop"
-                    android:layout_marginEnd="@dimen/fragmentAccountActivity_txt90days_marginEnd"
-                    android:layout_marginBottom="@dimen/fragmentAccountActivity_txtDaySelected_marginBottom"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_textlayout"
-                    android:gravity="center"
-                    android:text="@string/fragmentAccountActivity_txt90days_text" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/txtAccountDate"
-                android:layout_width="@dimen/fragmentAccountActivity_txtAccountDate_layoutWidth"
-                android:layout_height="@dimen/fragmentAccountActivity_txtAccountDate_layoutHeight"
-                android:layout_below="@+id/linearLayoutDaySelect"
-                android:layout_alignParentStart="true"
-                android:background="@color/dark_grey"
-                android:gravity="center"
-                android:text="TEST"
-                android:textColor="@color/white" />
-
-            <com.example.hoangcv2_task.CustomWormProgressBar
-                android:id="@+id/dots_progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/linearLayoutDaySelect"
-                android:layout_alignParentEnd="true"
-                android:visibility="invisible"
-                app:color="@color/black"
-                app:count="3" />
-
-            <TextView
-                android:layout_centerHorizontal="true"
-                android:id="@+id/txtLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/linearLayoutDaySelect"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/recyclerViewLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tabLayout"
-            android:background="@drawable/background_layout">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewAccountActivity"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </RelativeLayout>
+            android:layout_alignBottom="@id/progressBarWorm"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_horizontal"
+            android:text="Loading....."
+            android:textColor="@color/white"
+            android:textSize="40dp" />
     </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

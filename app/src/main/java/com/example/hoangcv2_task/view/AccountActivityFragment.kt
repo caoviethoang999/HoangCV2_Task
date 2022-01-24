@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.location.*
+import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -11,12 +12,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.animation.AlphaAnimation
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.hoangcv2_task.*
 import com.example.hoangcv2_task.Enum
 import com.example.hoangcv2_task.R
@@ -34,19 +38,21 @@ import kotlin.collections.ArrayList
 import com.example.hoangcv2_task.adapter.AccountActivityAdapter
 import com.example.hoangcv2_task.adapter.AccountActivityPagingAdapter
 import com.google.android.gms.location.*
+import kotlinx.android.synthetic.main.fragment_account_activity.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 
 
 class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickListener,
-    ViewTreeObserver.OnScrollChangedListener {
+    ViewTreeObserver.OnScrollChangedListener, SwipeRefreshLayout.OnRefreshListener {
 
     private lateinit var viewModel: AccountActivityViewModel
     private lateinit var binding: FragmentAccountActivityBinding
     private lateinit var accountActivityAdapter: AccountActivityAdapter
     private lateinit var accountActivityPagingAdapter: AccountActivityPagingAdapter
     private var networkConfig= NetworkConfig()
-    private var listAccountActivity: MutableList<AccountTest> = ArrayList<AccountTest>()
+    var listAccountActivity: MutableList<AccountTest> = ArrayList<AccountTest>()
     private var listCheckDate: MutableList<AccountStatus> = ArrayList<AccountStatus>()
     private var list10DaySelected: MutableList<AccountTest> = ArrayList<AccountTest>()
     private var list30DaySelected: MutableList<AccountTest> = ArrayList<AccountTest>()
@@ -66,14 +72,16 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUi()
-        addData()
+//        addData()
         displayData(page,limit)
+        binding.refreshLayout.setOnRefreshListener(this)
 //        getCurrentLocation()
         binding.txt10days.setOnClickListener(this)
         binding.txt30days.setOnClickListener(this)
         binding.txt90days.setOnClickListener(this)
         binding.test.viewTreeObserver.addOnScrollChangedListener(this)
     }
+
 
     fun getCurrentLocation(){
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireActivity())
@@ -178,64 +186,64 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
     }
 
     private fun addData() {
-//        viewModel.insertAccountActivity(
-//            AccountActivity(
-//                "Acc 1.1234567A",
-//                3,
-//                timeStamp.parse("2021/12/28")!!,
-//                "ID#151320430"
-//            )
-//        )
-//        viewModel.insertAccountActivity(
-//            AccountActivity(
-//                "Acc 1.1234567B",
-//                1,
-//                timeStamp.parse("2021/12/27")!!,
-//                "ID#151320431"
-//            )
-//        )
-//        viewModel.insertAccountActivity(
-//            AccountActivity(
-//                "Acc 1.1234567C",
-//                1,
-//                timeStamp.parse("2021/12/23")!!,
-//                "ID#151320432"
-//            )
-//        )
-//        viewModel.insertAccountActivity(
-//            AccountActivity(
-//                "Acc 1.1234567D",
-//                2,
-//                timeStamp.parse("2021/12/24")!!,
-//                "ID#151320433"
-//            )
-//        )
-//        viewModel.insertAccountActivity(
-//            AccountActivity(
-//                "Acc 1.1234567E",
-//                3,
-//                timeStamp.parse("2021/12/28")!!,
-//                "ID#151320434"
-//            )
-//        )
-//        viewModel.insertAccountActivity(
-//            AccountActivity(
-//                "Acc 1.1234567F",
-//                2,
-//                timeStamp.parse("2021/12/30")!!,
-//                "ID#151320436"
-//            )
-//        )
-        for (i in 0 until 1000){
-            viewModel.insertAccountActivity(
-                AccountActivity(
-                    "Acc 1.1234567F",
-                    2,
-                    timeStamp.parse("2021/12/30")!!,
-                    "ID#15132043$i"
-                )
+        viewModel.insertAccountActivity(
+            AccountActivity(
+                "Acc 1.1234567A",
+                3,
+                timeStamp.parse("2021/12/28")!!,
+                "ID#151320430"
             )
-        }
+        )
+        viewModel.insertAccountActivity(
+            AccountActivity(
+                "Acc 1.1234567B",
+                1,
+                timeStamp.parse("2021/12/27")!!,
+                "ID#151320431"
+            )
+        )
+        viewModel.insertAccountActivity(
+            AccountActivity(
+                "Acc 1.1234567C",
+                1,
+                timeStamp.parse("2021/12/23")!!,
+                "ID#151320432"
+            )
+        )
+        viewModel.insertAccountActivity(
+            AccountActivity(
+                "Acc 1.1234567D",
+                2,
+                timeStamp.parse("2021/12/24")!!,
+                "ID#151320433"
+            )
+        )
+        viewModel.insertAccountActivity(
+            AccountActivity(
+                "Acc 1.1234567E",
+                3,
+                timeStamp.parse("2021/12/28")!!,
+                "ID#151320434"
+            )
+        )
+        viewModel.insertAccountActivity(
+            AccountActivity(
+                "Acc 1.1234567F",
+                2,
+                timeStamp.parse("2021/12/30")!!,
+                "ID#151320436"
+            )
+        )
+//        for (i in 0 until 1000){
+//            viewModel.insertAccountActivity(
+//                AccountActivity(
+//                    "Acc 1.1234567F",
+//                    2,
+//                    timeStamp.parse("2021/12/30")!!,
+//                    "ID#15132043$i"
+//                )
+//            )
+//        }
 
         if (checkDataAccountStatus().isEmpty()){
             addDataFromRemote()
@@ -268,27 +276,25 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
         binding.recyclerViewAccountActivity.layoutManager = LinearLayoutManager(requireContext())
         accountActivityAdapter = AccountActivityAdapter(this)
         accountActivityPagingAdapter = AccountActivityPagingAdapter()
-        binding.recyclerViewAccountActivity.adapter = accountActivityPagingAdapter
+//        binding.recyclerViewAccountActivity.adapter = accountActivityPagingAdapter
     }
 
 
     private fun displayData(page:Int, limit:Int) {
-        if (page > limit) {
-
+//        if (page > limit) {
+//
 //            binding.dotsProgress.visibility = View.GONE
-            return
-        }
-//        viewModel.getAllDataTest()
-//        viewModel.accountTestList.observe(viewLifecycleOwner, {
-//            listAccountActivity = it
-//            accountActivityAdapter.getAll(listAccountActivity)
-//            binding.recyclerViewAccountActivity.adapter = accountActivityAdapter
-//        })
-        lifecycleScope.launch {
-            viewModel.productList.collectLatest {
-                accountActivityPagingAdapter.submitData(it)
-            }
-        }
+//            return
+//        }
+        viewModel.getAllDataTest()
+        viewModel.accountTestList.observe(viewLifecycleOwner, {
+            listAccountActivity = it
+        })
+//        lifecycleScope.launch {
+//            viewModel.productList.collectLatest {
+//                accountActivityPagingAdapter.submitData(it)
+//            }
+//        }
     }
 
 
@@ -402,7 +408,6 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
         savedInstanceState: Bundle?
     ): View {
         setHasOptionsMenu(true)
-
         binding = FragmentAccountActivityBinding.inflate(inflater, container, false)
         val accountActivityRepository =
             AccountActivityRepository(AccountActivityDatabase(requireContext()), networkConfig.getInstance(),binding)
@@ -477,15 +482,58 @@ class AccountActivityFragment : Fragment(), View.OnClickListener, OnItemClickLis
             ?.addToBackStack(null)?.replace(R.id.fragment_container, fragment)?.commit()
     }
 
+
     override fun onScrollChanged() {
         val scrollY: Int = binding.test.scrollY
         val scrollX: Int = binding.test.scrollX
         if (scrollY == binding.test.getChildAt(0).measuredHeight - binding.test.measuredHeight) {
-            Toast.makeText(requireContext(), "That's all the data..", Toast.LENGTH_SHORT).show()
-            page++
-            binding.dotsProgress.visibility = View.VISIBLE
-            displayData(page, limit)
+//            Toast.makeText(requireContext(), "That's all the data..", Toast.LENGTH_SHORT).show()
+//            page++
+//            displayData(page, limit)
+            binding.refreshLayout.visibility=View.VISIBLE
+//            if(listAccountActivity.size >0){
+//                binding.refreshLayout.visibility=View.VISIBLE
+//            }else{
+//                binding.refreshLayout.visibility=View.GONE
+//            }
+        }
+
+    }
+
+    inner class MyTask : AsyncTask<Void?, Void?, Void?>() {
+        override fun onPreExecute() {
+            super.onPreExecute()
+            addData()
+//            binding.txt30days.isEnabled=false
+//            binding.txt30days.isSelected = false
+            binding.progressBarHolder.visibility = View.VISIBLE
+
+        }
+
+        override fun onPostExecute(aVoid: Void?) {
+            super.onPostExecute(aVoid)
+            binding.refreshTopLayout.visibility=View.GONE
+            accountActivityAdapter.getAll(listAccountActivity)
+            binding.recyclerViewAccountActivity.adapter = accountActivityAdapter
+            binding.progressBarHolder.visibility = View.INVISIBLE
+
+        }
+
+        override fun doInBackground(vararg params: Void?): Void? {
+            try {
+                for (i in 0 until listAccountActivity.size) {
+                    TimeUnit.SECONDS.sleep(1)
+                }
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            }
+            return null
         }
     }
 
+    override fun onRefresh() {
+        binding.refreshTopLayout.visibility=View.VISIBLE
+        MyTask().execute()
+        binding.refreshLayout.isRefreshing=false
+    }
 }

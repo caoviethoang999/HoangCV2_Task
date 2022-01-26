@@ -183,10 +183,8 @@
             </RelativeLayout>
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/progressBarHolder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -196,25 +194,22 @@
         android:clickable="true"
         android:visibility="gone">
 
-        <com.example.hoangcv2_task.CustomWormProgressBar
+        <com.example.hoangcv2_task.CustomLineProgressBar
             android:id="@+id/progressBarWorm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:indeterminate="true" />
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            app:line_color="@color/electric_green" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/progressBarWorm"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="70dp"
             android:gravity="center_horizontal"
             android:text="Loading....."
             android:textColor="@color/white"
-            android:textSize="40dp" />
-    </RelativeLayout>
+            android:textSize="20dp" />
+    </FrameLayout>
 </RelativeLayout>
